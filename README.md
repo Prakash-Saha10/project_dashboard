@@ -18,7 +18,9 @@ Real-time notifications powered by WebSockets
 **Technology Stack**
 
 Backend: Django
+
 Frontend: HTML, CSS, JavaScript, Bootstrap
+
 Real-time communication: WebSockets
 
 **What I Learned**
@@ -28,16 +30,24 @@ This project helped me understand complex Django workflows and user role managem
 **How to Run**
 
 Clone the repo
+
 Create a virtual environment and install dependencies (pip install -r requirements.txt)
+
 Run migrations: python manage.py migrate
+
 Start the development server: python manage.py runserver
+
 Access the app at http://localhost:8000
 
 Future Improvements
 
+
 Add task editing and deletion permissions based on roles
+
 Enhance the UI for better responsiveness
+
 Integrate advanced notification system
+
 Add user authentication and permissions refinements
 
 
