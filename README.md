@@ -39,8 +39,7 @@ Start the development server: python manage.py runserver
 
 Access the app at http://localhost:8000
 
-Future Improvements
-
+**Future Improvements**
 
 Add task editing and deletion permissions based on roles
 
