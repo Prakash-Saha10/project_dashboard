@@ -21,6 +21,7 @@ What I Learned
 This project helped me understand complex Django workflows and user role management. I faced many challenges fixing bugs, especially in JavaScript and frontend-backend integration. Some issues required significant refactoring, which improved my debugging and problem-solving skills.
 
 How to Run
+
 Clone the repo
 Create a virtual environment and install dependencies (pip install -r requirements.txt)
 Run migrations: python manage.py migrate
