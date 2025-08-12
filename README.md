@@ -1,7 +1,7 @@
-Project Management Dashboard
+**Project Management Dashboard**
 A task and project management dashboard inspired by Jira, built with Django to help teams track projects and tasks efficiently.
 
-Features
+**Features**
 
 Multiple user roles: Tester, Web Developer, Project Analyst, and more
 
@@ -15,17 +15,17 @@ Interactive charts to visualize task progress by role
 
 Real-time notifications powered by WebSockets
 
-Technology Stack
+**Technology Stack**
 
 Backend: Django
 Frontend: HTML, CSS, JavaScript, Bootstrap
 Real-time communication: WebSockets
 
-What I Learned
+**What I Learned**
 
 This project helped me understand complex Django workflows and user role management. I faced many challenges fixing bugs, especially in JavaScript and frontend-backend integration. Some issues required significant refactoring, which improved my debugging and problem-solving skills.
 
-How to Run
+**How to Run**
 
 Clone the repo
 Create a virtual environment and install dependencies (pip install -r requirements.txt)
