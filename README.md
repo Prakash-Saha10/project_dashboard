@@ -4,10 +4,15 @@ A task and project management dashboard inspired by Jira, built with Django to h
 Features
 
 Multiple user roles: Tester, Web Developer, Project Analyst, and more
+
 Admin users can create new projects
+
 Regular users can create tasks under projects but cannot edit or delete them
+
 Everyone can view project and task details, along with updates
+
 Interactive charts to visualize task progress by role
+
 Real-time notifications powered by WebSockets
 
 Technology Stack
