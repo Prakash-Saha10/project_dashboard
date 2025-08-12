@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ task.title }}{% endblock %}
+
+{% block content %}
+
+<style>
+  .avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover; /* Ensures no stretching */
+    border-radius: 50%; /* Perfect circle */
+    border: 2px solid #ddd;
+  }
+</style>
+
+
+<div class="row g-4">
+  <!-- Main Task Details -->
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="mb-0">{{ task.title }}</h5>
+          <small class="text-muted-small">
+            Project: <a href="{% url 'project_detail' task.project.pk %}">{{ task.project.name }}</a>
+          </small>
+        </div>
+        <div class="text-end">
+          <span class="badge 
+            {% if task.priority == 'CRITICAL' %}bg-danger
+            {% elif task.priority == 'HIGH' %}bg-warning
+            {% elif task.priority == 'MEDIUM' %}bg-info
+            {% else %}bg-secondary
+            {% endif %}">
+            {{ task.get_priority_display }}
+          </span>
+          <span class="badge 
+            {% if task.status == 'COMPLETED' %}bg-success
+            {% elif task.status == 'IN_PROGRESS' %}bg-primary
+            {% elif task.status == 'BLOCKED' %}bg-danger
+            {% else %}bg-secondary
+            {% endif %} ms-2">
+            {{ task.get_status_display }}
+          </span>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <p class="text-muted-small">{{ task.description }}</p>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <small class="text-muted-small">Status</small>
+            <div class="fw-semibold">{{ task.get_status_display }}</div>
+          </div>
+          <div class="col-md-4">
+            <small class="text-muted-small">Assigned To</small>
+            <div class="d-flex align-items-center">
+              {% if task.assigned_to %}
+                {% if task.assigned_to.profile_pic %}
+                  <img src="{{ task.assigned_to.profile_pic.url }}" class="avatar me-2" alt="{{ task.assigned_to.get_full_name }}">
+                {% else %}
+                  <img src="{% static 'img/default-avatar.png' %}" class="avatar me-2" alt="{{ task.assigned_to.get_full_name }}">
+                {% endif %}
+                {{ task.assigned_to.get_full_name }}
+              {% else %}
+                <span class="text-muted-small">Unassigned</span>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <small class="text-muted-small">Due</small>
+            <div class="fw-semibold">{{ task.due_date|date:"M d, Y" }}</div>
+          </div>
+        </div>
+
+        <hr>
+
+        <h6 class="mb-3">Update Task</h6>
+        <form method="post">
+          {% csrf_token %}
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">New Status</label>
+              {{ update_form.status_after }}
+            </div>
+            <div class="col-12">
+              <label class="form-label">Notes</label>
+              {{ update_form.notes }}
+            </div>
+          </div>
+          <div class="mt-3">
+            <button class="btn btn-primary">Save Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Update History -->
+    <div class="card mt-3 shadow-sm">
+      <div class="card-header"><strong>Update History</strong></div>
+      <div class="card-body">
+        {% for u in task.updates.all %}
+          <div class="mb-3">
+            <div class="d-flex align-items-start gap-3">
+              {% if u.updated_by.profile_pic %}
+                <img src="{{ u.updated_by.profile_pic.url }}" class="avatar" alt="{{ u.updated_by.get_full_name }}">
+              {% else %}
+                <img src="{% static 'img/default-avatar.png' %}" class="avatar" alt="{{ u.updated_by.get_full_name }}">
+              {% endif %}
+              <div>
+                <div class="fw-semibold">
+                  {{ u.updated_by.get_full_name }}
+                  <small class="text-muted-small">· {{ u.created_at|timesince }} ago</small>
+                </div>
+                <div class="small text-muted">
+                  From {{ u.get_status_before_display }} → {{ u.get_status_after_display }}
+                </div>
+                {% if u.notes %}
+                  <div class="mt-2 bg-light p-2 rounded">{{ u.notes }}</div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="text-muted-small">No updates yet</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Sidebar -->
+  <div class="col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-header"><strong>Project Team</strong></div>
+      <div class="card-body">
+        {% for m in task.project.team_members.all %}
+          <div class="d-flex align-items-center mb-3">
+            {% if m.profile_pic %}
+              <img src="{{ m.profile_pic.url }}" class="avatar me-3" alt="{{ m.get_full_name }}">
+            {% else %}
+              <img src="{% static 'img/default-avatar.png' %}" class="avatar me-3" alt="{{ m.get_full_name }}">
+            {% endif %}
+            <div>
+              <div class="fw-semibold">{{ m.get_full_name }}</div>
+              <small class="text-muted-small">{{ m.get_role_display }}</small>
+            </div>
+          </div>
+        {% empty %}
+          <div class="text-muted-small">No team members</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

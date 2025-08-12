@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'dashboard' %}">
+            <i class="fas fa-tasks me-2"></i>ProjectDash
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'project_list' %}">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task_list' %}">Tasks</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle me-1"></i>
+                        {{ request.user.get_short_name }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </li>
+            </ul><li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-bell"></i>
+        {% if unread_count > 0 %}
+        <span class="badge bg-danger notification-badge">{{ unread_count }}</span>
+        {% endif %}
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationsDropdown">
+        <li><h6 class="dropdown-header">Recent Notifications</h6></li>
+        {% for notification in recent_notifications %}
+        <li>
+            <a class="dropdown-item notification-item {% if not notification.is_read %}unread{% endif %}" 
+               href="{% if notification.related_task %}{% url 'task_detail' notification.related_task.pk %}{% else %}#{% endif %}">
+                <div class="d-flex">
+                    <div class="flex-shrink-0 me-2">
+                        <i class="fas fa-bell {% if not notification.is_read %}text-primary{% else %}text-muted{% endif %}"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0">{{ notification.message|truncatechars:40 }}</p>
+                        <small class="text-muted">{{ notification.created_at|timesince }} ago</small>
+                    </div>
+                </div>
+            </a>
+        </li>
+        {% empty %}
+        <li><a class="dropdown-item">No new notifications</a></li>
+        {% endfor %}
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="{% url 'notification_list' %}">View All</a></li>
+        <li><a class="dropdown-item" href="{% url 'mark_all_as_read' %}">Mark All as Read</a></li>
+    </ul>
+</li>
+        </div>
+    </div>
+</nav>

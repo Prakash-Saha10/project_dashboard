@@ -1,0 +1,408 @@
+/* Base Styles */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar Customization */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+    padding: 15px 20px;
+}
+
+/* Progress Bars */
+.progress {
+    height: 10px;
+    border-radius: 5px;
+}
+
+.progress-bar {
+    background-color: #4e73df;
+}
+
+/* Notification Badge */
+.notification-badge {
+    position: relative;
+    top: -10px;
+    right: -5px;
+}
+
+/* Task Status Colors */
+.task-status-NOT_STARTED {
+    background-color: #f8f9fa;
+}
+.task-status-IN_PROGRESS {
+    background-color: #fff3cd;
+}
+.task-status-BLOCKED {
+    background-color: #f8d7da;
+}
+.task-status-COMPLETED {
+    background-color: #d1e7dd;
+}
+
+/* Chart Container */
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+/* Responsive Tables */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Hover Effects */
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* Custom Utilities */
+.rounded-circle {
+    object-fit: cover;
+}
+
+/* Navbar */
+.navbar {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Cards */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+    padding: 12px 20px;
+}
+
+/* Progress Bars */
+.progress {
+    height: 8px;
+}
+.progress-bar {
+    background-color: #4e73df;
+}
+
+/* Task Status Badges */
+.badge-not-started { background-color: #6c757d; }
+.badge-in-progress { background-color: #fd7e14; }
+.badge-completed { background-color: #28a745; }
+
+/* Tables */
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+:root {
+    --primary: #4e73df;
+    --secondary: #858796;
+    --success: #1cc88a;
+    --danger: #e74a3b;
+    --warning: #f6c23e;
+}
+
+/* Base Styles */
+body {
+    background-color: #f8f9fc;
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 0.35rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.project-card .card-header {
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Progress Bars */
+.progress {
+    border-radius: 0.35rem;
+    background-color: #eaecf4;
+}
+
+/* Status Badges */
+.badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+.badge-planning {
+    background-color: #36b9cc;
+}
+
+.badge-in_progress {
+    background-color: #f6c23e;
+}
+
+.badge-completed {
+    background-color: #1cc88a;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 0.35rem;
+    font-weight: 600;
+}
+
+/* Forms */
+.form-control {
+    border-radius: 0.35rem;
+    padding: 0.75rem 1rem;
+}
+
+/* Utility Classes */
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+}
+
+/* Task Detail Page Styles */
+.detail-item {
+    margin-bottom: 1.5rem;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.timeline-badge {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Form Styles */
+.form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Select2 Customization */
+.select2-container--bootstrap-5 .select2-selection {
+    padding: 0.5rem 1rem;
+    border-radius: 0.35rem;
+}
+
+/* Status Colors */
+.bg-planning { background-color: #36b9cc !important; }
+.bg-in_progress { background-color: #f6c23e !important; }
+.bg-on_hold { background-color: #858796 !important; }
+.bg-completed { background-color: #1cc88a !important; }
+
+/* Priority Colors */
+.bg-low { background-color: #858796 !important; }
+.bg-medium { background-color: #f6c23e !important; }
+.bg-high { background-color: #fd7e14 !important; }
+.bg-critical { background-color: #e74a3b !important; }
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .card-header h2, 
+    .card-header h5 {
+        font-size: 1.25rem;
+    }
+}
+/* Notification dropdown styling */
+.notification-dropdown {
+    max-height: 60vh;
+    overflow-y: auto;
+    width: 320px;
+}
+
+.notification-item.unread {
+    background-color: rgba(78, 115, 223, 0.05);
+    border-left: 3px solid #4e73df;
+}
+
+/* Mobile adjustments */
+@media (max-width: 991.98px) {
+    .notification-dropdown {
+        width: 100%;
+    }
+}
+
+:root{
+  --primary: #4e73df;
+  --accent: #7b61ff;
+  --muted: #6c757d;
+  --success: #1cc88a;
+  --danger: #e74a3b;
+  --warning: #f6c23e;
+  --card-bg: #ffffff;
+  --page-bg: #f6f9fb;
+}
+
+/* Base */
+html,body{height:100%}
+body{
+  font-family: 'Nunito', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--page-bg);
+  color:#333;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Navbar */
+.navbar { background: linear-gradient(90deg,var(--primary),var(--accent)); border: none; }
+.navbar .navbar-brand { font-weight:700; letter-spacing: 0.2px; color:#fff; }
+.navbar .nav-link { color: rgba(255,255,255,0.95); }
+.navbar .nav-link.active { text-decoration: underline; }
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(32,40,60,0.06);
+}
+.card-header { background: transparent; padding: 14px 20px; font-weight:600; }
+.card-body { padding:18px; }
+
+/* Project card */
+.project-card .card-header { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+
+/* Progress bars */
+.progress { height: 9px; border-radius: 8px; background:#eef2ff; overflow:visible; }
+.progress-bar { border-radius:8px; }
+
+/* Badges - useful small helpers */
+.badge-status { font-size:0.75rem; font-weight:600; padding:0.35rem 0.6rem; border-radius:999px; color:#fff; }
+.badge-planning { background:#36b9cc; }
+.badge-in_progress { background:var(--warning); color:#222; }
+.badge-on_hold { background:#858796; }
+.badge-completed { background:var(--success); }
+
+/* Table */
+.table-hover tbody tr:hover { background:#fbfdff; }
+
+/* Forms */
+.form-control, .form-select, textarea {
+  border-radius: 8px;
+  border: 1px solid #e6e9f2;
+  padding: 0.6rem 0.9rem;
+  box-shadow:none;
+  transition: box-shadow .15s ease, border-color .15s ease;
+}
+.form-control:focus, .form-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 6px 18px rgba(78,115,223,0.12);
+}
+
+/* Card hover lift */
+.card:hover { transform: translateY(-4px); transition: transform .18s ease; }
+
+/* Rounded avatars */
+.avatar { width:36px; height:36px; object-fit:cover; border-radius:50%; }
+
+/* Tiny utilities */
+.text-muted-small { color: #8891a6; font-size:0.85rem; }
+.kv { display:flex; gap:8px; align-items:center; }
+.detail-item small { display:block; color:#6b7280; font-size:0.82rem; margin-bottom:6px; }
+
+/* Task row colors */
+.task-NOT_STARTED { background: transparent; }
+.task-IN_PROGRESS { background: rgba(255,199,0,0.05); }
+.task-BLOCKED { background: rgba(231,76,60,0.04); }
+.task-COMPLETED { background: rgba(34,197,94,0.04); }
+
+/* Chart containers */
+.canvas-wrapper { height: 220px; position: relative; }
+
+/* Notification dropdown */
+.notification-dropdown { width: 340px; max-height:58vh; overflow:auto; }
+
+/* Task Form special layout */
+.form-left { min-width: 55%; }
+.form-right { min-width: 40%; }
+
+/* Responsive adjustments */
+@media(max-width: 991px){
+  .form-left, .form-right { min-width: 100% !important; }
+  .notification-dropdown { width: 100% !important; }
+}
+
+/* Small helpers for buttons */
+.btn-primary { background: linear-gradient(90deg,var(--primary),var(--accent)); border: none; box-shadow: 0 6px 18px rgba(78,115,223,0.12); }
+
+/* Profile Page Specific Styles */
+.profile-avatar {
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Form Styles */
+.profile-form .form-control {
+    padding: 0.75rem 1rem;
+    border: 1px solid #e0e0e0;
+}
+
+.profile-form label {
+    font-weight: 600;
+    color: #555;
+}
+
+/* Stats Card */
+.stats-card {
+    border-left: 4px solid #4e73df;
+}
+
+.stats-card .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.stats-card .stat-label {
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .profile-avatar {
+        width: 100px !important;
+        height: 100px !important;
+    }
+    
+    .stats-card .col-4 {
+        margin-bottom: 1rem;
+    }
+}
+#taskChart {
+    max-height: 200px;
+}

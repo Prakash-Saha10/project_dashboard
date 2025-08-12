@@ -1,0 +1,221 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Dynamic Title -->
+    <title>ProjectFlow | {% block title %}{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    
+    <!-- Core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- Enhanced Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">
+                <i class="fas fa-tasks me-2"></i>ProjectFlow
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'project' in request.path %}active{% endif %}" 
+                           href="{% url 'project_list' %}">
+                            <i class="fas fa-project-diagram me-1"></i> Projects
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'task' in request.path %}active{% endif %}" 
+                           href="{% url 'task_list' %}">
+                            <i class="fas fa-tasks me-1"></i> Tasks
+                        </a>
+                    </li>
+                    {% if request.user.is_superuser or request.user.role == 'ADMIN' %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'user' in request.path %}active{% endif %}" 
+                           href="{% url 'user_list' %}">
+                            <i class="fas fa-users me-1"></i> Team
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                
+                <ul class="navbar-nav ms-auto">
+                    <!-- Real-Time Notifications -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle position-relative" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell"></i>
+                            <span id="unreadCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ request.user.notifications.unread.count }}
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end p-0" style="width: 320px;">
+                            <div class="dropdown-header bg-light py-2">
+                                <div class="d-flex justify-content-between">
+                                    <strong>Notifications</strong>
+                                    <a href="{% url 'mark_all_as_read' %}" class="text-primary small">Mark all read</a>
+                                </div>
+                            </div>
+                            <div id="notificationList" class="overflow-auto" style="max-height: 300px;">
+                                {% for notification in request.user.notifications.unread|slice:":5" %}
+                                <a class="dropdown-item border-bottom py-2 {% if not notification.is_read %}bg-light{% endif %}" 
+                                   href="{% if notification.related_task %}{% url 'task_detail' notification.related_task.pk %}{% else %}#{% endif %}">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0 text-primary me-2">
+                                            <i class="fas fa-bell"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <p class="mb-0 small">{{ notification.message }}</p>
+                                            <small class="text-muted">{{ notification.created_at|timesince }} ago</small>
+                                        </div>
+                                    </div>
+                                </a>
+                                {% empty %}
+                                <div class="p-3 text-center text-muted">
+                                    No new notifications
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="dropdown-footer bg-light py-2 text-center">
+                                <a href="{% url 'notification_list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <!-- User Profile -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            {% if request.user.profile_pic %}
+                            <img src="{{ request.user.profile_pic.url }}" width="30" height="30" class="rounded-circle me-1">
+                            {% else %}
+                            <i class="fas fa-user-circle me-1"></i>
+                            {% endif %}
+                            {{ request.user.get_short_name }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="{% url 'profile' %}">
+                                <i class="fas fa-user me-2"></i> Profile
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'logout' %}">
+                                <i class="fas fa-sign-out-alt me-2"></i> Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container flex-grow-1 py-4">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-4">
+            <div class="d-flex align-items-center">
+                <i class="fas 
+                    {% if message.tags == 'success' %}fa-check-circle{% endif %}
+                    {% if message.tags == 'error' %}fa-exclamation-circle{% endif %}
+                    {% if message.tags == 'warning' %}fa-exclamation-triangle{% endif %}
+                    {% if message.tags == 'info' %}fa-info-circle{% endif %}
+                    me-2"></i>
+                <div>{{ message }}</div>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+        {% endfor %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light py-3 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 text-muted small">
+                        &copy; {% now "Y" %} ProjectFlow. All rights reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0 text-muted small">
+                        v1.0.0 | 
+                        <a href="#" class="text-decoration-none">Terms</a> | 
+                        <a href="#" class="text-decoration-none">Privacy</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Core JavaScript -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/notifications.js' %}"></script>
+    
+    <!-- WebSocket & Global Functions -->
+    <script>
+        // Initialize WebSocket
+        const notificationSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/notifications/'
+        );
+
+        // Global CSRF token function
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Initialize plugins
+        $(document).ready(function() {
+            // Select2 dropdowns
+            $('select').select2({
+                theme: 'bootstrap-5',
+                width: '100%'
+            });
+
+            // Datepickers
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true
+            });
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

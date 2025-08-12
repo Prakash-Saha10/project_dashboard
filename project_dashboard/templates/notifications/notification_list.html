@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">Notifications</h3>
+                <a href="{% url 'mark_all_as_read' %}" class="btn btn-sm btn-outline-secondary">
+                    Mark All as Read
+                </a>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    {% for notification in notifications %}
+                    <a href="{% if notification.related_task %}{% url 'task_detail' notification.related_task.pk %}{% else %}#{% endif %}" 
+                       class="list-group-item list-group-item-action {% if not notification.is_read %}unread-notification{% endif %}">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <p class="mb-1">{{ notification.message }}</p>
+                                <small class="text-muted">
+                                    <i class="far fa-clock me-1"></i>
+                                    {{ notification.created_at|timesince }} ago
+                                </small>
+                            </div>
+                            {% if not notification.is_read %}
+                            <span class="badge bg-primary rounded-pill">New</span>
+                            {% endif %}
+                        </div>
+                    </a>
+                    {% empty %}
+                    <div class="list-group-item text-center py-4">
+                        <i class="far fa-bell fa-2x text-muted mb-2"></i>
+                        <p class="mb-0">No notifications yet</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
