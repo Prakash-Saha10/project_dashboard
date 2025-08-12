@@ -34,4 +34,4 @@ iii. Real-Time Updates: WebSockets
 1. Implement task editing and deletion permissions based on user roles.
 2. Enhance UI responsiveness and overall design.
 3. Expand the notification system with advanced features.
-4. Refine user authentication and permission controls.
+4. Refine user authentication and permission controls..
